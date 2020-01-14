@@ -14,14 +14,17 @@ export class Search extends Component {
             };
 
       render() {
+
+            const { showClear, clearUsers } = this.props;
+
             return (
                   <div>
                         <form onSubmit = {this.onSubmit} className = 'form'>
                               
                               <input type        = 'text' 
                                      name        = 'text'
-                                     value       =  { this.state.text }
-                                     onChange    =  { this.onChange }
+                                     value       = { this.state.text }
+                                     onChange    = { this.onChange }
                                      placeholder = 'Search Users...'
                               />
                                        
@@ -30,11 +33,11 @@ export class Search extends Component {
                                      className = 'btn btn-dark btn-block'
                               />
                         </form>
-                        
-                        { this.props.showClear &&    //  (&&) if that's TRUE show
+
+                        { showClear &&    //  (&&) if that's TRUE show
                        
-                              <button className = ' btn btn=light btn-block'
-                                      onClick   = { this.props.clearUsers }>Clear</button>
+                              <button className = 'btn btn-light btn-block'
+                                      onClick   = { clearUsers }>Clear</button>
                         }
                   </div>
             )

@@ -1,9 +1,14 @@
-import React, { Component } from "react";
-import "./App.css";
-import Navbar from './Components/layout/Navbar';
-import Users  from './Components/users/Users';
-import Search from './Components/users/Search';
+import React, { Fragment, Component } from "react";
+import { BrowserRouter 
+           as Router, Switch, Route } from 'react-router-dom';
+
 import axios  from 'axios';
+import Users  from './components/users/Users';
+import About  from './components/pages/About';
+import Navbar from './components/layout/Navbar';
+import Search from './components/users/Search';
+
+import "./App.css";
 
 const USER = 'd811de7f78bffecfed6c';
 const PASS = '5783819d291da5b5ee8fed8a42f9900dd57d8760';
@@ -58,19 +63,35 @@ class App extends Component {
 
 
     render() {
+        
+        const { users, loading} = this.state;
+
         return (
-            <div className="App">
-                <Navbar title = 'Github Finder'/>
-                <div className = 'container'>
+            <Router>
+                <div className="App">
+                    <Navbar title = 'Github Finder'/>
+                    <div className = 'container'>
+                        <Switch>
+                            <Route exact path = '/'
+                                render = { props => (
+                                    <Fragment>
+                                        <Search searchUsers = { this.searchUsers } 
+                                                clearUsers  = { this.clearUsers }
+                                                showClear   = { users.length > 0 ? true : false}/>
+                
+                                        <Users  loading     = { loading } 
+                                                users       = { users } /> 
 
-                    <Search searchUsers = { this.searchUsers } 
-                            clearUsers  = { this.clearUsers }
-                            showClear   = { this.state.users.length > 0  ?  true  :  false}/>
+                                    </Fragment>
+                                )} 
+                            />
 
-                    <Users  loading     = { this.state.loading } 
-                            users       = { this.state.users } /> 
+                            <Route exact path = '/about' component = {About} />
+                        </Switch>
+
+                    </div>
                 </div>
-            </div>
+            </Router>
         );
     }
 }
