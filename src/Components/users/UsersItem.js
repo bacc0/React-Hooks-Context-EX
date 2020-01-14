@@ -1,4 +1,6 @@
-import React from 'react'
+import React    from 'react';
+import { Link } from 'react-router-dom';
+
 
 const UsersItem = (props) => {
 
@@ -14,11 +16,11 @@ const UsersItem = (props) => {
 <                 h3>{ login }</h3>
 
                   <div>
-                        <a href      = { html_url }
-                              target    = 'blank' 
+                        <Link to = {`/user/${login}`}
+                              // target    = 'blank' 
                               className = 'btn btn-dark btn-sm my-1'>
                               More
-                        </a>
+                        </Link>
                   </div>
             </div>
       )

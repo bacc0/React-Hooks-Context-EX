@@ -4,6 +4,7 @@ import { BrowserRouter
 
 import axios  from 'axios';
 import Users  from './components/users/Users';
+import User   from './components/users/User';
 import About  from './components/pages/About';
 import Navbar from './components/layout/Navbar';
 import Search from './components/users/Search';
@@ -16,7 +17,8 @@ const PASS = '5783819d291da5b5ee8fed8a42f9900dd57d8760';
 class App extends Component {
     state = {
         loading: false,
-        users  : []  
+        users  : []  ,
+        user   : {}
     }
     async componentDidMount () {
 
@@ -30,7 +32,7 @@ class App extends Component {
             users  : res.data,
             loading: false
         })
-    }
+    };
 
     searchUsers = async ( text ) => {
 
@@ -51,6 +53,25 @@ class App extends Component {
             users  : res.data.items,
             loading: false
         })
+    };
+
+    getUser = async ( username ) => {
+
+        this.setState({ loading: true });
+
+        const res = await axios.get(`https://api.github.com/users/${username}
+                ?client_id=
+                            ${USER}
+                &client_secret=
+                            ${PASS}`);
+            
+        this.setState({
+            
+            user   : res.data,
+            loading: false
+        })
+      
+
     }
 
     clearUsers = () => {
@@ -59,13 +80,13 @@ class App extends Component {
             loading: false
         })
 
-    }
+    };
 
 
     render() {
         
-        const { users, loading} = this.state;
-
+        const { user, users, loading} = this.state;
+        
         return (
             <Router>
                 <div className="App">
@@ -85,15 +106,24 @@ class App extends Component {
                                     </Fragment>
                                 )} 
                             />
-
+                            
                             <Route exact path = '/about' component = {About} />
-                        </Switch>
+                            <Route exact path = '/user/:login' 
+                                render = { props => (
 
+                                      < User { ...props } 
+                                        user    = {user} 
+                                        getUser = {this.getUser} 
+                                        loading = 'loading'
+                                    />
+                                )} 
+                            />
+                        </Switch>
                     </div>
                 </div>
             </Router>
         );
     }
-}
+};
 
 export default App;
