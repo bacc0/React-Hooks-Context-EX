@@ -43,6 +43,6 @@ Search.protoTypes = {
       searchUsers: PropTypes.func.isRequired,
       clearUsers : PropTypes.func.isRequired,
       showClear  : PropTypes.bool.isRequired
-}
+};
 
 export default Search
