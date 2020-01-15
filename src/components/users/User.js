@@ -22,8 +22,6 @@ class User extends Component {
                   avatar_url
 
                   } = this.props.user;
-
-            const { loading } = this.props;
            
 
             return (
